@@ -213,7 +213,8 @@ console.log(depositsFor);
 const withdrawals = movements.filter(mov => mov < 0);
 console.log(withdrawals);
 */
-
+////////////////////////////
+///// Chaining Methods
 // PIPELINE
 const eurToUsd = 1.1;
 const totalDepositUSD = movements
@@ -221,3 +222,14 @@ const totalDepositUSD = movements
   .map(mov => mov * eurToUsd)
   .reduce((acc, mov) => acc + mov, 0);
 console.log(totalDepositUSD);
+
+// At Method
+const arr = [23, 11, 64];
+console.log(arr[0]);
+console.log(arr.at(0));
+// getting last array element
+console.log(arr[arr.length - 1]);
+console.log(arr.slice(-1));
+console.log(arr.at(-1));
+
+console.log('jonas'.at(-1));
