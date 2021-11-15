@@ -61,6 +61,8 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
+/////////////////////////////////////////////////////////
+// Creating DOM elements
 const displayMovements = function (movements) {
   movements.forEach(function (mov, i) {
     // containerMovements.innerHTML = '';
@@ -79,9 +81,17 @@ const displayMovements = function (movements) {
   });
 };
 displayMovements(account1.movements);
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
-// stw inicials
+/////////////////////////////////////////////////////////
+//The REDUCE Methods
+const calcDisplayBalance = function (movements) {
+  const balance = movements.reduce((acc, mov) => acc + mov, 0);
+  labelBalance.textContent = `${balance} EUR`;
+};
+calcDisplayBalance(account1.movements);
+
+/////////////////////////////////////////////////////////
+// Computing Usernames
 const createUsernames = function (accs) {
   accs.forEach(function (acc) {
     acc.username = acc.owner
@@ -92,6 +102,7 @@ const createUsernames = function (accs) {
   });
 };
 createUsernames(accounts);
+console.log(accounts);
 
 const calcDisplaySummary = function (movements) {
   const incomes = movements
@@ -126,11 +137,129 @@ const currencies = new Map([
   ['GBP', 'Pound sterling'],
 ]);
 
-// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
-
-/////////////////////////////////////////////////
-// Coding challenge #1
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 /*
+/////////////////////////////////////////////////////////
+// SIMPLE ARRAY METHODS
+let arr = ['a', 'b', 'c', 'd', 'e'];
+
+// SLICE METHOD IT DOESNT MUTATES THE ARRAY
+console.log(arr.slice(2));
+console.log(arr.slice(2, 4));
+console.log(arr.slice(-2));
+console.log(arr.slice(-1));
+console.log(arr.slice(1, -2));
+console.log(arr.slice());
+console.log([...arr]);
+console.log('---------------------------');
+
+// SPLICE METHOD IT MUTATES THE ARRAY
+//console.log(arr.splice(2));
+arr.splice(-1);
+console.log(arr);
+arr.splice(1, 2);
+console.log(arr);
+console.log('---------------------------');
+
+// REVERSE METHOD IT MUTATES THE ARRAY
+arr = ['a', 'b', 'c', 'd', 'e'];
+const arr2 = ['j', 'i', 'h', 'g', 'f'];
+console.log(arr2.reverse());
+console.log(arr2);
+
+// CONCAT METHOD IT DOESNT MUTATES THE ARRAY
+const letters = arr.concat(arr2);
+console.log(letters);
+console.log([...arr, ...arr2]);
+
+// JOIN METHOD
+console.log(letters.join(' - '));
+
+/////////////////////////////////////////////////////////
+// At Method
+const arr = [23, 11, 64];
+console.log(arr[0]);
+console.log(arr.at(0));
+// getting last array element
+console.log(arr[arr.length - 1]);
+console.log(arr.slice(-1));
+console.log(arr.at(-1));
+
+console.log('jonas'.at(-1));
+
+/////////////////////////////////////////////////////////
+// FOREACH LOOP
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+//for (const movement of movements) {
+for (const [i, movement] of movements.entries()) {
+  if (movement > 0) {
+    console.log(`Movement ${i + 1}: You deposited ${movement}`);
+  } else {
+    console.log(`Movement ${i + 1}: You withdrew ${Math.abs(movement)}`);
+  }
+}
+
+console.log('------ FOREACH -------');
+// CONTINUE AND BREAK DONT WORK ON THIS LOOP
+movements.forEach(function (mov, i, arr) {
+  //FIRST PARAMETER CURRENT ELEMENT, SECOND CURRENT INDEX, THIRD ENTIRE ARRAY
+  if (mov > 0) {
+    console.log(`Movement ${i + 1}: You deposited ${mov}`);
+  } else {
+    console.log(`Movement ${i + 1}: You withdrew ${Math.abs(mov)}`);
+  }
+});
+// 0: function(200)
+// 1: function(450)
+// 2: function(400)
+// ...
+
+/////////////////////////////////////////////////////////
+// FOREACH WITH MAPS AND SETS
+// WITH A MAP
+const currencies = new Map([
+  ['USD', 'United States dollar'],
+  ['EUR', 'Euro'],
+  ['GBP', 'Pound sterling'],
+]);
+
+currencies.forEach(function (value, key, Map) {
+  console.log(`${key}: ${value}`);
+});
+
+// WITH A SET
+const currenciesUnique = new Set(['USD', 'GBP', 'USD', 'EUR', 'EUR']);
+console.log(currenciesUnique);
+currenciesUnique.forEach(function (value, _, map) {
+  console.log(`${value}: ${value}`);
+});
+
+console.log(movements);
+// accumulator -> SNOWBALL
+// const balance = movements.reduce(function (acc, cur, i, arr) {
+//   console.log(`Iteration ${i}: ${acc}`);
+//   return acc + cur;
+// }, 0);
+// console.log(balance);
+
+const balance = movements.reduce((acc, cur) => acc + cur, 0);
+console.log(balance);
+
+let balance2 = 0;
+for (const mov of movements) balance2 += mov;
+console.log(balance2);
+
+// Maximum value
+const max = movements.reduce((acc, mov) => {
+  if (acc > mov) return acc;
+  else return mov;
+}, movements[0]);
+console.log(max);
+
+/////////////////////////////////////////////////////////
+// Coding challenge #1
+
 Working With Arrays
 Coding Challenge #1
 Julia and Kate are doing a study on dogs. So each of them asked 5 dog owners 
@@ -175,7 +304,8 @@ checkDogs([3, 5, 2, 12, 7], [4, 1, 15, 8, 3]);
 checkDogs([9, 16, 6, 8, 3], [10, 5, 6, 1, 4]);
 
 
-
+/////////////////////////////////////////////////////////
+// The MAP Method
 const eurToUsd = 1.1;
 
 // const movementsUSD = movements.map(function (mov) {
@@ -199,7 +329,8 @@ const movementsDescriptions = movements.map(
 );
 console.log(movementsDescriptions);
 
-
+/////////////////////////////////////////////////////////
+// The filter Method
 const deposits = movements.filter(function (mov) {
   return mov > 0;
 });
@@ -212,8 +343,28 @@ console.log(depositsFor);
 
 const withdrawals = movements.filter(mov => mov < 0);
 console.log(withdrawals);
-*/
-////////////////////////////
+
+/////////////////////////////////////////////////////////
+// Coding Challenge #2
+const calcAverageHumanAge = function (ages) {
+  const humanAges = ages.map(age => (age <= 2 ? 2 * age : 16 + age * 4));
+  const adults = humanAges.filter(age => age >= 18);
+  console.log(humanAges, adults);
+  // const average = adults.reduce((acc, age) => acc + age, 0) / adults.length;
+  const average = adults.reduce(
+    (acc, age, i, arr) => acc + age / arr.length,
+    0
+  );
+
+  // 2 3. (2+3)/2 = 2.5. === 2/2+3/2 = 2.5
+  return average;
+};
+
+const average1 = calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]);
+const average2 = calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4]);
+console.log(average1, average2);
+
+/////////////////////////////////////////////////////////
 ///// Chaining Methods
 // PIPELINE
 const eurToUsd = 1.1;
@@ -222,14 +373,4 @@ const totalDepositUSD = movements
   .map(mov => mov * eurToUsd)
   .reduce((acc, mov) => acc + mov, 0);
 console.log(totalDepositUSD);
-
-// At Method
-const arr = [23, 11, 64];
-console.log(arr[0]);
-console.log(arr.at(0));
-// getting last array element
-console.log(arr[arr.length - 1]);
-console.log(arr.slice(-1));
-console.log(arr.at(-1));
-
-console.log('jonas'.at(-1));
+*/
