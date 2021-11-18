@@ -188,6 +188,7 @@ btnTransfer.addEventListener('click', function (e) {
   updateUI(currentAccount);
 });
 
+// Implementing Loan Btn
 btnLoan.addEventListener('click', function (e) {
   e.preventDefault();
 
@@ -715,11 +716,41 @@ const dogs = [
   { weight: 32, curFood: 340, owners: ['Michael'] },
 ];
 
+// #1
 const calcDogFood = function (arr) {
-  arr.forEach(element, i, array => {
-    console.log(element);
-    // element.recommendedFood = element.weight ** 0.75 * 28;
-    // array.push(element.recommendedFood);
-  });
+  arr.forEach(
+    dog => (dog.recommendedFood = Math.trunc(dog.weight ** 0.75 * 28))
+  );
 };
 calcDogFood(dogs);
+console.log(dogs);
+
+// #2
+const owner = dogs.find(dog => dog.owners.includes('Sarah'));
+// console.log(owner);
+
+if (owner.curFood > owner.recommendedFood) {
+  console.log("Sarah's dog is eating too much");
+} else if (owner.curFood < owner.recommendedFood) {
+  console.log("Sarah's dog is eating too little");
+}
+
+// #3
+const ownersEatTooMuch = dogs
+  .filter(dog => dog.curFood > dog.recommendedFood)
+  .flatMap(dog => dog.owners);
+console.log(ownersEatTooMuch);
+
+const ownersEatTooLittle = dogs
+  .filter(dog => dog.curFood < dog.recommendedFood)
+  .flatMap(dog => dog.owners);
+console.log(ownersEatTooLittle);
+
+// #4
+console.log(`${ownersEatTooMuch.join(' and ')}'s dogs eat too much!'`);
+console.log(`${ownersEatTooLittle.join(' and ')}'s dogs eat too little!'`);
+
+// #5
+const reccEqualcurr = dogs.find(dog => dog.weight === dog.curFood);
+
+console.log(reccEqualcurr);
