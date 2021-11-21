@@ -751,6 +751,27 @@ console.log(`${ownersEatTooMuch.join(' and ')}'s dogs eat too much!'`);
 console.log(`${ownersEatTooLittle.join(' and ')}'s dogs eat too little!'`);
 
 // #5
-const reccEqualcurr = dogs.find(dog => dog.weight === dog.curFood);
+// dogs.forEach(dog => console.log(dog.curFood === dog.recommendedFood));
+console.log(dogs.some(dog => dog.curFood === dog.recommendedFood));
 
-console.log(reccEqualcurr);
+// #6
+// dogs.forEach(dog =>
+//   console.log(
+//     dog.curFood > dog.recommendedFood * 0.9 &&
+//       dog.curFood < dog.recommendedFood * 1.1
+//   )
+// );
+const checkEatingOkay = dog =>
+  dog.curFood > dog.recommendedFood * 0.9 &&
+  dog.curFood < dog.recommendedFood * 1.1;
+
+console.log(dogs.some(checkEatingOkay));
+// #7
+console.log(dogs.filter(checkEatingOkay));
+
+// 8.
+//sort it by recommended food portion in an ascending order
+const dogsSorted = dogs
+  .slice()
+  .sort((a, b) => a.recommendedFood - b.recommendedFood);
+console.log(dogsSorted);
